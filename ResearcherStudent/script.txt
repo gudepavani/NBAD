@@ -1,0 +1,265 @@
+SET NAMES utf8;
+
+
+
+SET FOREIGN_KEY_CHECKS = 0;
+
+
+DROP database assignment3;
+
+CREATE database assignment3;
+
+
+USE assignment3;
+
+
+
+
+
+-- ----------------------------
+--  Table structure for `Answer`
+-- ----------------------------
+
+
+
+
+DROP TABLE IF EXISTS `Answer`;
+
+
+CREATE TABLE `Answer` (
+  
+
+`StudyID` varchar(40) NOT NULL DEFAULT '',
+
+
+`QuestionID` varchar(40) NOT NULL DEFAULT '',
+ 
+
+`UserName` varchar(40) NOT NULL DEFAULT '',
+  
+
+`Choice` varchar(50) DEFAULT NULL,
+  
+
+`DateSubmitted` datetime DEFAULT NULL,
+  
+
+PRIMARY KEY (`StudyID`,`QuestionID`,`UserName`)
+) 
+
+ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+
+
+
+
+-- ----------------------------
+--  Table structure for `Question`
+-- ----------------------------
+
+
+
+DROP TABLE IF EXISTS `Question`;
+
+
+
+CREATE TABLE `Question` (
+  
+
+`QuestionID` varchar(40) NOT NULL DEFAULT '',
+
+`StudyID` varchar(40) DEFAULT NULL,
+  
+
+`Question` varchar(100) DEFAULT NULL,
+  
+
+`AnswerType` varchar(20) DEFAULT NULL,
+  
+
+`Option1` varchar(40) DEFAULT NULL,
+  
+
+`Option2` varchar(40) DEFAULT NULL,
+  
+
+`Option3` varchar(40) DEFAULT NULL,
+  
+
+`Option4` varchar(40) DEFAULT NULL,
+  
+
+`Option5` varchar(40) DEFAULT NULL,
+  
+
+PRIMARY KEY (`QuestionID`),
+  
+
+KEY `StudyID` (`StudyID`),
+  
+
+CONSTRAINT `question_ibfk_1` FOREIGN KEY (`StudyID`) REFERENCES `Study` (`StudyID`) ON DELETE CASCADE ON 
+
+UPDATE CASCADE
+) 
+
+
+ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+
+
+
+-- ----------------------------
+--  Table structure for `Reported`
+-- ----------------------------
+
+
+
+DROP TABLE IF EXISTS `Reported`;
+
+
+CREATE TABLE `Reported` (
+  
+
+`QuestionID` varchar(255) NOT NULL,
+  
+
+`StudyID` varchar(40) NOT NULL DEFAULT '',
+
+`Username` varchar(50) NOT NULL,
+  
+
+`Date` datetime DEFAULT NULL,
+  
+
+`NumParticipants` int(15) DEFAULT NULL,
+  
+
+`Status` varchar(100) DEFAULT NULL,
+  
+
+PRIMARY KEY (`StudyID`,`QuestionID`,`Username`),
+  
+
+KEY `QuestionID` (`QuestionID`),
+
+KEY `Username` (`Username`),
+  
+
+CONSTRAINT `reported_ibfk_1` FOREIGN KEY (`QuestionID`) REFERENCES `Question` (`QuestionID`) ON DELETE 
+
+CASCADE ON UPDATE CASCADE,
+  
+
+CONSTRAINT `reported_ibfk_2` FOREIGN KEY (`StudyID`) REFERENCES `Study` (`StudyID`) ON DELETE CASCADE ON 
+
+UPDATE CASCADE
+,
+
+CONSTRAINT `reported_ibfk_3` FOREIGN KEY (`Username`) REFERENCES `Study` (`Username`) ON DELETE 
+
+CASCADE ON UPDATE CASCADE) 
+
+ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+
+
+
+
+
+-- ----------------------------
+--  Table structure for `Study`
+-- ----------------------------
+
+
+DROP TABLE IF EXISTS `Study`;
+
+CREATE TABLE `Study` (
+  
+
+`StudyID` varchar(40) NOT NULL DEFAULT '',
+  
+
+`StudyName` varchar(40) DEFAULT NULL,
+  
+
+`Description` varchar(100) DEFAULT NULL,
+  
+
+`Username` varchar(50) DEFAULT NULL,
+  
+
+`DateCreated` datetime DEFAULT NULL,
+  
+
+`ImageURL` varchar(50) DEFAULT NULL,
+  
+
+`ReqParticipants` int(15) DEFAULT NULL,
+  
+
+`ActParticipants` int(15) DEFAULT NULL,
+  
+
+`SStatus` varchar(50) DEFAULT NULL,
+  
+
+PRIMARY KEY (`StudyID`),
+  
+
+KEY `Username` (`Username`),
+  
+
+CONSTRAINT `study_ibfk_1` FOREIGN KEY (`Username`) REFERENCES `User` (`Username`) ON DELETE CASCADE ON 
+
+UPDATE CASCADE
+) 
+
+ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+
+-- ----------------------------
+--  Table structure for `User`
+-- ----------------------------
+
+DROP TABLE IF EXISTS `User`;
+
+
+CREATE TABLE `User` (
+  
+
+`Username` varchar(50) NOT NULL DEFAULT '',
+  
+
+`Password` varchar(50) DEFAULT NULL,
+
+`name` varchar(50) NOT NULL,
+  
+
+`Type` varchar(50) DEFAULT NULL,
+  
+
+`Studies` int(15) DEFAULT NULL,
+  
+
+`Participation` int(15) DEFAULT NULL,
+  
+
+`Coins` int(15) DEFAULT NULL,
+
+PRIMARY KEY (`Username`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+
+
+
+
+INSERT INTO User VALUES('admin@gmail.com','1234','admin','admin',0,0,0);
+select * from user;
+select * from study;
+
